@@ -1,7 +1,5 @@
 package POE::Filter::EPPTCP;
 
-our $VERSION = '0';
-
 use 5.024;
 use utf8;
 use strictures 2;
@@ -12,6 +10,8 @@ use English qw(-no_match_vars);
 
 use Moose qw(has extends);
 use MooseX::NonMoose;
+
+our $VERSION = '0';
 
 extends 'Moose::Object', 'POE::Filter';
 
@@ -52,12 +52,12 @@ sub get_one {
 
 	my $frames = [];
 
-      BUFFER_LOOP: while ($self->has_buffer()) {
+	while ($self->has_buffer) {
 		my ($len, $eppframe) = (0, undef);
 
-		$buf .= $self->shift_buffer();
+		$buf .= $self->shift_buffer;
 
-		if (4 < length $buf) {
+	      BUFFER_LOOP: while (4 < length $buf) {
 			my $lenbuf = substr $buf, 0, 4;
 			($len) = unpack 'N', $lenbuf;
 
@@ -68,15 +68,12 @@ sub get_one {
 
 				# Remove the header from the frame.
 				substr $eppframe, 0, 4, q{};
-			} ## end if ($len <= length $buf)
-		} ## end if (4 < length $buf)
-
-		if (defined $eppframe) {
-			push @{$frames}, $eppframe;
-
-			last BUFFER_LOOP;
-		}
-	} ## end BUFFER_LOOP: while ($self->has_buffer())
+				push @{$frames}, $eppframe;
+			} else {
+				last BUFFER_LOOP;
+			}
+		} ## end BUFFER_LOOP: while (4 < length $buf)
+	} ## end while ($self->has_buffer)
 
 	# If we have some remaining buffer, put it back into the buffer ring, at the beginning.
 	if (length $buf > 0) {
@@ -98,7 +95,7 @@ sub put {
 } ## end sub put
 
 no Moose;
-__PACKAGE__->meta()->make_immutable();
+__PACKAGE__->meta->make_immutable;
 
 1;
 
