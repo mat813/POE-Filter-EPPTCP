@@ -1,0 +1,9 @@
+# .proverc
+# Show failures
+-f
+# Rerun tests that were changed or that failed
+--state=fresh,failed,save
+# Add count
+-P Count
+# Et le temps passé
+--timer

@@ -1,0 +1,8 @@
+.build
+.prove
+.vscode
+POE-Filter-EPPTCP-[0-9]*
+cover_db/
+local/
+log
+script/*.pid

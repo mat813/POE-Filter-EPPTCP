@@ -1,0 +1,24 @@
+-bext=/ 
+-se
+-i=8
+-it=2
+-ci=2
+-xci
+-et=8
+-l=132
+-pt=2
+-ce
+-cti=1
+-cab=4
+-cb
+-cbo=0
+-wbb="% + - * / x != == >= <= =~ !~ < > | &"
+-enc=utf8
+-wn
+-sot
+-sct
+-asc
+-tqw
+-sbq=0
+-csc
+-csct=30
